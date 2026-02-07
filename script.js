@@ -83,60 +83,7 @@ const valentineData = [
     answer: "ANY",
     content:
       "Hello, Mitthu<br><br>Happy happy Day 1 of Valentine's week<br><br>Now the \"..loves me...loves me not game\" I had done a lot when I started to crush on you. Although kahi baar I did get a Yes, I didn't think it would be true...but here I am celebrating my valentine's with the guy I wanted so bad<br><br>Single rose se kabhi kaam nhi chalta to show how much you mean to me. Agar tu PG mai hota toh you would have gotten flowers but koina. Here's a virtual bouquet from me.<br><br>I love you so so so very much Aditya.",
-  },
-
-  {
-    day: 8,
-    title: "Propose Day",
-    type: "approval",
-    task: "Send me a photo of us on WhatsApp!",
-    content: "I'd choose you every time. Try to click No!",
-  },
-  {
-    day: 9,
-    title: "Chocolate Day",
-    type: "quiz",
-    question: "Which chocolate do I like?",
-    answer: "dairy milk",
-    content: "Sweet as chocolate! Scratch it off.",
-  },
-  {
-    day: 10,
-    title: "Teddy Day",
-    type: "approval",
-    task: "Send me a voice note saying 'I love you'",
-    content: "You're my cuddly teddy bear!",
-  },
-  {
-    day: 11,
-    title: "Promise Day",
-    type: "quiz",
-    question: "Where did we first meet?",
-    answer: "college",
-    content: "I promise to stay by your side.",
-  },
-  {
-    day: 12,
-    title: "Hug Day",
-    type: "approval",
-    task: "Send me a picture of you making a silly face!",
-    content: "Virtual hugs incoming!",
-  },
-  {
-    day: 13,
-    title: "Kiss Day",
-    type: "quiz",
-    question: "What's my favorite color?",
-    answer: "red",
-    content: "A thousand kisses for you! Tap the box.",
-  },
-  {
-    day: 14,
-    title: "Valentine's Day",
-    type: "approval",
-    task: "Call me and tell me your favorite memory of us!",
-    content: "Happy Valentine's Day! I love you! ❤️",
-  },
+  }
 ];
 
 const grid = document.getElementById("calendarGrid");
@@ -672,3 +619,4 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
+
