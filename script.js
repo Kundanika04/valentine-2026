@@ -432,6 +432,8 @@ function loadInteraction(item) {
             <div id="proposeResult" style="display:none;">
                 <h2 style="font-family:'Pacifico'; color:var(--hot-pink); font-size:2.5rem;">Official Valentine! ❤️</h2>
                 <div class="heartbeat-container" style="font-size:80px; margin: 20px 0;">💖</div>
+                <!-- PHOTO REVEAL -->
+                <img src="us-propose.jpg" style="width:100%; border-radius:15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom:15px;" alt="Us">
                 <div class="hidden-note" style="display:block; white-space: pre-wrap; background: #fff5f5; border: 2px dashed var(--hot-pink); text-align:left;">
                     ${item.content}
                 </div>
@@ -557,7 +559,6 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
-
 
 
 
