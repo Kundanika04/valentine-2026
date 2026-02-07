@@ -1,7 +1,7 @@
 // ==========================================
 // 1. CONFIGURATION
 // ==========================================
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
 function createBackgroundHearts() {
   const heart = document.createElement("div");
@@ -672,3 +672,4 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
+
