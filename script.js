@@ -83,6 +83,15 @@ const valentineData = [
     answer: "ANY",
     content:
       "Hello, Mitthu<br><br>Happy happy Day 1 of Valentine's week<br><br>Now the \"..loves me...loves me not game\" I had done a lot when I started to crush on you. Although kahi baar I did get a Yes, I didn't think it would be true...but here I am celebrating my valentine's with the guy I wanted so bad<br><br>Single rose se kabhi kaam nhi chalta to show how much you mean to me. Agar tu PG mai hota toh you would have gotten flowers but koina. Here's a virtual bouquet from me.<br><br>I love you so so so very much Aditya.",
+  },
+
+  {
+    day: 8,
+    title: "Propose Day",
+    type: "approval",
+    task: "Send me a video of you proposing me",
+    content:
+      "I know it's not extremely accurate but uss yeh karne bohot mann tha cause this was the day we met for the first time after you told me that you liked me as well.<br><br>That day in September when you told me, I honestly did not know what to think cause mere mind mai sab hal chal mach rha tha but I instantly wanted to say yes and I did.<br><br> So on this Propose Day, I want to say that I am so glad that you proposed to me and that I said yes because now we are together and I can't imagine my life without you. I love you so much Aditya! ❤️",
   }
 ];
 
@@ -391,7 +400,63 @@ function loadInteraction(item) {
         }
       }
     };
-  } 
+  }
+  else if (item.day === 8) { // PROPOSE DAY
+        modalBody.innerHTML = `
+            <div id="proposeGame">
+                <p style="font-weight:bold; font-size:1.3rem; color: var(--hot-pink);">
+                    Aditya, will you be my Valentine? 
+                </p>
+                
+                <div id="proposeContainer" style="height:250px; position:relative; margin-top:20px; display:flex; align-items:center; justify-content:center;">
+                    <button id="yesBtn" style="width:auto; padding: 15px 45px; font-size: 24px; z-index:10; background: var(--hot-pink); color: white; border-radius: 50px; border:none; box-shadow: 0 10px 20px rgba(255,0,84,0.3);">YES! ❤️</button>
+                    
+                    <button id="noBtn" style="position:absolute; top: 20px; right: 20px; width:auto; padding:5px 10px; font-size:10px; opacity:0.6; background:#eee; color:#333 !important; border:1px solid #ccc; cursor:not-allowed; z-index:20; transition: all 0.2s ease;">No</button>
+                </div>
+            </div>
+
+            <div id="proposeResult" style="display:none; animation: fadeIn 1s forwards;">
+                <h2 style="font-family:'Pacifico'; color:var(--hot-pink); font-size:2.5rem;">Official Valentine! ❤️</h2>
+                <div class="heartbeat-container" style="font-size:80px; margin: 20px 0;">💖</div>
+                
+                <!-- PHOTO REVEAL -->
+                <img src="us-propose.jpg" style="width:100%; border-radius:15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom:15px;" alt="Us">
+                
+                <div class="hidden-note" style="display:block; white-space: pre-wrap; background: #fff5f5; border: 2px dashed var(--hot-pink);">
+                    ${item.content}
+                </div>
+            </div>
+        `;
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const container = document.getElementById('proposeContainer');
+        const proposeGame = document.getElementById('proposeGame');
+        const proposeResult = document.getElementById('proposeResult');
+
+        // THE RUNAWAY LOGIC
+        const moveButton = () => {
+            const maxX = container.offsetWidth - noBtn.offsetWidth;
+            const maxY = container.offsetHeight - noBtn.offsetHeight;
+            noBtn.style.left = Math.floor(Math.random() * maxX) + "px";
+            noBtn.style.top = Math.floor(Math.random() * maxY) + "px";
+        };
+        noBtn.onmouseover = moveButton;
+        noBtn.ontouchstart = (e) => { e.preventDefault(); moveButton(); };
+
+        // THE YES LOGIC
+        yesBtn.onclick = () => {
+            // 1. Big Confetti
+            confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 } });
+            
+            // 2. Play success sound
+            if(document.getElementById('successSnd')) document.getElementById('successSnd').play();
+
+            // 3. Switch Screen
+            proposeGame.style.display = "none";
+            proposeResult.style.display = "block";
+        };
+    }
 }
 
 // Keep your startRoseShower, initScratch, initKissZone exactly as they were!
@@ -472,5 +537,6 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
+
 
 
