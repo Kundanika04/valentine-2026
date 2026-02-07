@@ -405,24 +405,34 @@ function loadInteraction(item) {
         modalBody.innerHTML = `
             <div id="proposeGame">
                 <p style="font-weight:bold; font-size:1.3rem; color: var(--hot-pink);">
-                    Aditya, will you be my Valentine? 
+                    Mitthu, will you be my Valentine?
                 </p>
                 
-                <div id="proposeContainer" style="height:250px; position:relative; margin-top:20px; display:flex; align-items:center; justify-content:center;">
+                <div id="proposeContainer" style="height:250px; position:relative; margin-top:20px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
                     <button id="yesBtn" style="width:auto; padding: 15px 45px; font-size: 24px; z-index:10; background: var(--hot-pink); color: white; border-radius: 50px; border:none; box-shadow: 0 10px 20px rgba(255,0,84,0.3);">YES! ❤️</button>
                     
-                    <button id="noBtn" style="position:absolute; top: 20px; right: 20px; width:auto; padding:5px 10px; font-size:10px; opacity:0.6; background:#eee; color:#333 !important; border:1px solid #ccc; cursor:not-allowed; z-index:20; transition: all 0.2s ease;">No</button>
+                    <button id="noBtn" style="
+                        position:absolute; 
+                        top: 20px; right: 20px; 
+                        width:auto; 
+                        padding:8px 15px; 
+                        font-size:12px; 
+                        background:#eee; 
+                        color:#333 !important; 
+                        border:1px solid #ccc; 
+                        border-radius:5px;
+                        cursor:not-allowed; 
+                        z-index:20; 
+                        transition: all 0.1s ease;
+                        touch-action: none; /* Prevents browser zooming/panning on tap */
+                    ">No</button>
                 </div>
             </div>
 
-            <div id="proposeResult" style="display:none; animation: fadeIn 1s forwards;">
+            <div id="proposeResult" style="display:none;">
                 <h2 style="font-family:'Pacifico'; color:var(--hot-pink); font-size:2.5rem;">Official Valentine! ❤️</h2>
                 <div class="heartbeat-container" style="font-size:80px; margin: 20px 0;">💖</div>
-                
-                <!-- PHOTO REVEAL -->
-                <img src="us-propose.jpg" style="width:100%; border-radius:15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-bottom:15px;" alt="Us">
-                
-                <div class="hidden-note" style="display:block; white-space: pre-wrap; background: #fff5f5; border: 2px dashed var(--hot-pink);">
+                <div class="hidden-note" style="display:block; white-space: pre-wrap; background: #fff5f5; border: 2px dashed var(--hot-pink); text-align:left;">
                     ${item.content}
                 </div>
             </div>
@@ -434,25 +444,35 @@ function loadInteraction(item) {
         const proposeGame = document.getElementById('proposeGame');
         const proposeResult = document.getElementById('proposeResult');
 
-        // THE RUNAWAY LOGIC
-        const moveButton = () => {
-            const maxX = container.offsetWidth - noBtn.offsetWidth;
-            const maxY = container.offsetHeight - noBtn.offsetHeight;
-            noBtn.style.left = Math.floor(Math.random() * maxX) + "px";
-            noBtn.style.top = Math.floor(Math.random() * maxY) + "px";
-        };
-        noBtn.onmouseover = moveButton;
-        noBtn.ontouchstart = (e) => { e.preventDefault(); moveButton(); };
-
-        // THE YES LOGIC
-        yesBtn.onclick = () => {
-            // 1. Big Confetti
-            confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 } });
+        const moveButton = (e) => {
+            if(e) e.preventDefault(); // CRITICAL: This stops the click from happening
             
-            // 2. Play success sound
-            if(document.getElementById('successSnd')) document.getElementById('successSnd').play();
+            const maxX = container.clientWidth - noBtn.offsetWidth;
+            const maxY = container.clientHeight - noBtn.offsetHeight;
 
-            // 3. Switch Screen
+            // Generate random coordinates
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            noBtn.style.left = randomX + "px";
+            noBtn.style.top = randomY + "px";
+        };
+
+        // Mouse listeners for desktop
+        noBtn.addEventListener('mouseover', moveButton);
+        
+        // Touch listeners for phone (Passive: false allows e.preventDefault to work)
+        noBtn.addEventListener('touchstart', moveButton, {passive: false});
+        
+        // Safety net: if he somehow clicks it, it still moves
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        yesBtn.onclick = () => {
+            confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 } });
+            if(document.getElementById('successSnd')) document.getElementById('successSnd').play();
             proposeGame.style.display = "none";
             proposeResult.style.display = "block";
         };
@@ -537,6 +557,7 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
+
 
 
 
