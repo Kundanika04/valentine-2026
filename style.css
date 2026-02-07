@@ -1,0 +1,461 @@
+:root {
+    --hot-pink: #ff0054;
+    --deep-pink: #fb6f92;
+    --soft-pink: #ffb3c1;
+    --white: #ffffff;
+}
+
+/* Rose Petal Animation */
+.petal {
+    position: fixed;
+    top: -50px;
+    pointer-events: none;
+    /* Must be higher than the modal (1000) */
+    z-index: 2000; 
+    font-size: 30px;
+    filter: drop-shadow(0 0 5px rgba(255,100,100,0.5));
+    animation: fall linear forwards;
+}
+.progress-container {
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
+}
+.card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
+    padding: 20px 10px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Add a "Flap" look to the card */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 40%;
+    background: rgba(255, 255, 255, 0.1);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transition: 0.3s;
+}
+
+.card:hover::before {
+    transform: translateY(-10px);
+}
+
+/* Glow for completed cards */
+.card.completed {
+    border-color: gold;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+#reasonText {
+    transition: opacity 0.2s ease-in-out;
+    color: var(--hot-pink);
+    font-size: 1.1rem;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+    min-height: 120px; /* Gives cards a consistent height */
+}s
+.progress-bg {
+    background: rgba(255, 255, 255, 0.3);
+    height: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+/* For Promise Day Match Game */
+.mem-card.found {
+    background: #4caf50 !important; /* Turns green when matched */
+    cursor: default;
+}
+
+/* Ensure progress bar inside Teddy game works */
+.modal .progress-bg {
+    background: #eee;
+    border-radius: 10px;
+}
+#loveBar {
+    width: 0%; /* Starts at 0, updated by JS */
+    height: 100%;
+    background: linear-gradient(to right, #fb6f92, #ff0054);
+    transition: width 1s ease-in-out;
+    box-shadow: 0 0 10px rgba(255, 0, 84, 0.5);
+}
+@keyframes fall {
+    0% {
+        transform: translateY(0vh) rotate(0deg) translateX(0px);
+        opacity: 1;
+    }
+    100% {
+        /* Falls past the bottom of the screen */
+        transform: translateY(110vh) rotate(360deg) translateX(50px);
+        opacity: 0;
+    }
+}
+#yesBtn {
+    animation: pulseButton 1.5s infinite;
+}
+
+@keyframes pulseButton {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Make the Rose Button look clickable */
+#roseBtn {
+    font-size: 80px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: block;
+    margin: 20px auto;
+}
+
+#roseBtn:hover {
+    transform: scale(1.2) rotate(10deg);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* Animated Gradient Background */
+    background: linear-gradient(-45deg, #ffb3c1, #fb6f92, #ff0054, #ff8fa3);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Container to stack Image and Canvas */
+.scratch-container {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 15px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* The photo hidden underneath */
+.scratch-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures your photo fits the square nicely */
+    z-index: 1;
+}
+
+/* The chocolate layer on top */
+#scratchCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: crosshair;
+    touch-action: none; /* Prevents screen scrolling while scratching */
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    margin-top: 40px;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Card Styling: Glassmorphism */
+.card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    padding: 25px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.card:not(.locked):hover {
+    transform: translateY(-10px) rotate(3deg);
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 15px 40px rgba(255, 0, 84, 0.3);
+}
+
+/* Pulse effect for Unlocked Cards */
+.card:not(.locked) {
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+.card.locked {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Floating Hearts Background Elements */
+.bg-heart {
+    position: fixed;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+    z-index: 1;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+.modal {
+    display: none; /* JS will change this to flex */
+    position: fixed; 
+    z-index: 1000; 
+    left: 0; top: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.85);
+    align-items: center; /* Vertical center */
+    justify-content: center; /* Horizontal center */
+    backdrop-filter: blur(8px);
+}
+
+/* Modal Content: Font Visibility Fix */
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    width: 85%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 50px rgba(255, 77, 109, 0.5);
+    border: 4px solid var(--soft-pink);
+    max-height: 90vh;
+    overflow-y: auto;
+    
+    /* FIX: Ensure text inside is dark/pink so it's visible on white */
+    color: var(--hot-pink); 
+}
+
+/* Ensure the title and text inside modal are visible */
+.modal-content h2, .modal-content p {
+    color: var(--hot-pink);
+    margin-bottom: 15px;
+}
+
+/* Input Fix: Ensure typing text is visible */
+#ansInput {
+    width: 90%;
+    padding: 15px;
+    font-size: 16px;
+    margin: 15px 0;
+    border: 2px solid var(--soft-pink);
+    border-radius: 12px;
+    outline: none;
+    color: #333; /* Dark text for typing */
+    background: #fff;
+}
+
+/* Button Visibility */
+button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background: var(--hot-pink);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: var(--deep-pink);
+    transform: scale(1.02);
+}
+
+/* Close Button Fix */
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 30px;
+    color: var(--deep-pink);
+    cursor: pointer;
+}
+/* Bouquet Styles */
+.bouquet-container {
+    font-size: 50px;
+    min-height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+
+/* Envelope Styling */
+.envelope {
+    font-size: 60px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
+
+.envelope:hover {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* The Secret Note inside the envelope */
+.hidden-note {
+    background: #fff0f3;
+    border: 2px dashed var(--hot-pink);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: none; /* Hidden until envelope is clicked */
+    animation: slideUp 0.5s ease-out;
+    color: var(--hot-pink);
+    font-style: italic;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* The "She Loves Me" Text */
+#pluckText {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--hot-pink);
+    min-height: 40px;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+/* The Big I LOVE YOU Sign */
+.big-love-sign {
+    font-family: 'Pacifico', cursive;
+    font-size: 3.5rem;
+    color: var(--hot-pink);
+    text-shadow: 2px 2px 10px rgba(255, 0, 84, 0.3);
+    animation: zoomInHeartbeat 0.8s ease-out forwards;
+    margin: 20px 0;
+}
+
+@keyframes zoomInHeartbeat {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* Throw away animation for the single flower */
+.throw-away {
+    animation: throwOut 0.6s forwards;
+}
+
+@keyframes throwOut {
+    to { transform: translate(200px, -200px) rotate(45deg); opacity: 0; }
+}
+/* Flower Container */
+.flower-wrap {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 40px auto;
+    cursor: pointer;
+}
+
+/* The Petals */
+.individual-petal {
+    position: absolute;
+    top: 0; left: 50%;
+    width: 40px;
+    height: 70px;
+    background: white;
+    border: 2px solid var(--soft-pink);
+    border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+    transform-origin: bottom center;
+    transition: transform 0.5s;
+}
+
+/* The Flower Center */
+.flower-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 50px; height: 50px;
+    background: #ffd700; /* Gold/Yellow center */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* The Plucking Animation */
+.petal-fall {
+    animation: petalFallAnim 1.5s forwards ease-in;
+    pointer-events: none;
+}
+
+@keyframes petalFallAnim {
+    0% { transform: translate(-50%, 0) rotate(var(--angle)); opacity: 1; }
+    20% { transform: translate(-50%, -10px) rotate(var(--angle)); }
+    100% { transform: translate(var(--fallX), 500px) rotate(var(--fallR)); opacity: 0; }
+}
+
+/* Center Throw Away */
+.center-fly {
+    animation: centerFly 0.8s forwards ease-in;
+}
+
+@keyframes centerFly {
+    to { transform: translate(200px, -400px) scale(0); opacity: 0; }
+}

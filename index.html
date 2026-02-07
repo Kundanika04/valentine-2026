@@ -1,0 +1,45 @@
+<!--?admin=true-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 Days of Love ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDKs -->
+     <audio id="successSnd" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"></audio>
+<audio id="popSnd" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+</head>
+<body>
+<div style="width: 80%; background: rgba(255,255,255,0.3); height: 10px; border-radius: 5px; margin: 20px auto;">
+    <div id="loveBar" style="width: 0%; height: 100%; background: white; border-radius: 5px; transition: 1s ease;"></div>
+</div>
+    <div class="container">
+        <h1>For My Valentine ❤️</h1>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        
+        <!-- Admin Panel: Only visible if you add ?admin=true to the URL -->
+        <div id="adminPanel" style="display:none; margin-top: 30px; padding: 20px; border: 2px dashed #ff4d6d; border-radius: 15px;">
+            <h3>Admin Approval Panel</h3>
+            <p>Click these to unlock his photo tasks:</p>
+            <div id="adminButtons"></div>
+        </div>
+    </div>
+
+    <!-- Central Modal for Quiz, Tasks, and Games -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
