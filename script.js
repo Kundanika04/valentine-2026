@@ -82,7 +82,7 @@ const valentineData = [
       "I want to know... what is your favorite flower in the whole world? 🌸",
     answer: "ANY",
     content:
-      "Hello, mitthu\nTu agar apne PG pe hota toh flower zarur milta but khair. \nAccept yeh virtual bouquet for being the best boyfriend ever.\nI miss you way too much",
+      "Hello, Mitthu \nHappy happy Day 1 of Valentine's week..\n Now the \"..loves me...loves me not game\" I had done a lot when I started to crush on you. Although kahi baar I did get a Yes, I didn't think it would be true...but here I am celebrating my valentine's with the guy I wanted so bad\nSingle rose se kabhi kaam nhi chalta to show how much you mean to me. Agar tu PG mai hota toh you would have gotten flowers but koina. Here's a virtual bouquet from me. \nI love you so so so very much Aditya.",
   },
 
   {
@@ -672,4 +672,3 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
-
