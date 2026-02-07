@@ -91,7 +91,7 @@ const valentineData = [
     type: "approval",
     task: "Send me a video of you proposing me",
     content:
-      "I know it's not extremely accurate but uss yeh karne bohot mann tha cause this was the day we met for the first time after you told me that you liked me as well.<br><br>That day in September when you told me, I honestly did not know what to think cause mere mind mai sab hal chal mach rha tha but I instantly wanted to say yes and I did.<br><br> So on this Propose Day, I want to say that I am so glad that you proposed to me and that I said yes because now we are together and I can't imagine my life without you. I love you so much Aditya! ❤️",
+      "I know it's not extremely accurate but uss din yeh karne bohot mann tha cause this was the day we met for the first time after you told me that you liked me as well.<br><br>That day in September when you told me, I honestly did not know what to think cause mere mind mai sab hal chal mach rha tha but I instantly wanted to say yes and I did.<br><br> So on this Propose Day, I want to say that I am so glad that you proposed to me and that I said yes because now we are together and I can't imagine my life without you. I love you so much Aditya! ❤️",
   }
 ];
 
@@ -537,6 +537,7 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
+
 
 
 
