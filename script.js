@@ -92,7 +92,14 @@ const valentineData = [
     task: "Send me a video of you proposing me",
     content:
       "I know it's not extremely accurate but uss din yeh karne bohot mann tha cause this was the day we met for the first time after you told me that you liked me as well.<br><br>That day in September when you told me, I honestly did not know what to think cause mere mind mai sab hal chal mach rha tha but I instantly wanted to say yes and I did.<br><br> So on this Propose Day, I want to say that I am so glad that you proposed to me and that I said yes because now we are together and I can't imagine my life without you. I love you so much Aditya! ❤️",
-  }
+  },
+  {
+    day: 9,
+    title: "Chocolate Day",
+    type: "approval", 
+    task: "I want a cutie selfie with a chocolate or any snack you wanna have today. (Either you get or I am getting it for you )",
+    content: "Like the song that you recently started listening -<br><br> एक नज़र जो ऐसे मिल रही है, थोड़ी तेज़ सांसें चल रही हैं,सीने में है धड़का, अज़ जोरों से, हम समझते थे के इसमें दिल नहीं है<br><br> Even I thought ki mai kabhi kabhi aise kisiko apna emotional side dikhaungi hi nhi and ki I won't need anyone in my life. Phir tune entry maar li and the days I cried in front of you, the way you confort me and the way you make me smile, I am so emotionally dependent on you and I am loving it! I love you so much Aditya! ❤️",
+  },
 ];
 
 const grid = document.getElementById("calendarGrid");
@@ -270,46 +277,51 @@ document.querySelector(".close-btn").onclick = () => {
 };
 
 function checkQuiz(dayNum) {
-    const item = valentineData.find(d => d.day === dayNum);
-    const inputField = document.getElementById('ansInput');
-    const val = inputField.value.trim();
+  const item = valentineData.find((d) => d.day === dayNum);
+  const inputField = document.getElementById("ansInput");
+  const val = inputField.value.trim();
 
-    // SPECIAL RULE FOR ROSE DAY
-    if (dayNum === 7) {
-        if (val.length > 0) {
-            // 1. Save his favorite flower to Firebase so you can see it!
-            database.ref('favorites/flower').set(val);
-            
-            // 2. Celebrate and start the plucking game
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            
-            // 3. Mark card as completed
-            const currentCard = document.getElementById("card-" + dayNum);
-            if(currentCard) currentCard.classList.add('completed');
-            
-            loadInteraction(item);
-        } else {
-            alert("Please tell me your favorite flower! ❤️");
-        }
-    } 
-    // ORIGINAL RULE FOR OTHER DAYS
-    else {
-        if (val.toLowerCase() === item.answer.toLowerCase()) {
-            const currentCard = document.getElementById("card-" + dayNum);
-            if(currentCard) currentCard.classList.add('completed');
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            loadInteraction(item);
-        } else {
-            // Shake effect
-            const modalContent = document.querySelector('.modal-content');
-            modalContent.animate([
-                { transform: 'translateX(-10px)' }, { transform: 'translateX(10px)' },
-                { transform: 'translateX(-10px)' }, { transform: 'translateX(10px)' },
-                { transform: 'translateX(0)' }
-            ], { duration: 300 });
-            inputField.style.borderColor = "red";
-        }
+  // SPECIAL RULE FOR ROSE DAY
+  if (dayNum === 7) {
+    if (val.length > 0) {
+      // 1. Save his favorite flower to Firebase so you can see it!
+      database.ref("favorites/flower").set(val);
+
+      // 2. Celebrate and start the plucking game
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+
+      // 3. Mark card as completed
+      const currentCard = document.getElementById("card-" + dayNum);
+      if (currentCard) currentCard.classList.add("completed");
+
+      loadInteraction(item);
+    } else {
+      alert("Please tell me your favorite flower! ❤️");
     }
+  }
+  // ORIGINAL RULE FOR OTHER DAYS
+  else {
+    if (val.toLowerCase() === item.answer.toLowerCase()) {
+      const currentCard = document.getElementById("card-" + dayNum);
+      if (currentCard) currentCard.classList.add("completed");
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      loadInteraction(item);
+    } else {
+      // Shake effect
+      const modalContent = document.querySelector(".modal-content");
+      modalContent.animate(
+        [
+          { transform: "translateX(-10px)" },
+          { transform: "translateX(10px)" },
+          { transform: "translateX(-10px)" },
+          { transform: "translateX(10px)" },
+          { transform: "translateX(0)" },
+        ],
+        { duration: 300 }
+      );
+      inputField.style.borderColor = "red";
+    }
+  }
 }
 
 // ==========================================
@@ -341,6 +353,10 @@ function loadInteraction(item) {
             <div style="font-size:80px;">💐</div>
             <div class="envelope" id="openEnv" style="margin-top:20px; font-size:50px; cursor:pointer;">✉️</div>
             <div id="secretNote" class="hidden-note" style="display:none; padding:15px; border:2px dashed var(--hot-pink); border-radius:10px; background:#fff5f5;">
+            <!-- NEW: THE SMALL PHOTO INSIDE THE ENVELOPE -->
+        <img src="envelope-small.jpg" class="envelope-photo" alt="Us">
+        
+        <div style="color: var(--hot-pink); font-style: italic;">
                 ${item.content}
             </div>
         </div>
@@ -400,9 +416,9 @@ function loadInteraction(item) {
         }
       }
     };
-  }
-  else if (item.day === 8) { // PROPOSE DAY
-        modalBody.innerHTML = `
+  } else if (item.day === 8) {
+    // PROPOSE DAY
+    modalBody.innerHTML = `
             <div id="proposeGame">
                 <p style="font-weight:bold; font-size:1.3rem; color: var(--hot-pink);">
                     Mitthu, will you be my Valentine?
@@ -440,43 +456,94 @@ function loadInteraction(item) {
             </div>
         `;
 
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const container = document.getElementById('proposeContainer');
-        const proposeGame = document.getElementById('proposeGame');
-        const proposeResult = document.getElementById('proposeResult');
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const container = document.getElementById("proposeContainer");
+    const proposeGame = document.getElementById("proposeGame");
+    const proposeResult = document.getElementById("proposeResult");
 
-        const moveButton = (e) => {
-            if(e) e.preventDefault(); // CRITICAL: This stops the click from happening
-            
-            const maxX = container.clientWidth - noBtn.offsetWidth;
-            const maxY = container.clientHeight - noBtn.offsetHeight;
+    const moveButton = (e) => {
+      if (e) e.preventDefault(); // CRITICAL: This stops the click from happening
 
-            // Generate random coordinates
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+      const maxX = container.clientWidth - noBtn.offsetWidth;
+      const maxY = container.clientHeight - noBtn.offsetHeight;
 
-            noBtn.style.left = randomX + "px";
-            noBtn.style.top = randomY + "px";
-        };
+      // Generate random coordinates
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
 
-        // Mouse listeners for desktop
-        noBtn.addEventListener('mouseover', moveButton);
-        
-        // Touch listeners for phone (Passive: false allows e.preventDefault to work)
-        noBtn.addEventListener('touchstart', moveButton, {passive: false});
-        
-        // Safety net: if he somehow clicks it, it still moves
-        noBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveButton();
-        });
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+    };
 
-        yesBtn.onclick = () => {
-            confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 } });
-            if(document.getElementById('successSnd')) document.getElementById('successSnd').play();
-            proposeGame.style.display = "none";
-            proposeResult.style.display = "block";
+    // Mouse listeners for desktop
+    noBtn.addEventListener("mouseover", moveButton);
+
+    // Touch listeners for phone (Passive: false allows e.preventDefault to work)
+    noBtn.addEventListener("touchstart", moveButton, { passive: false });
+
+    // Safety net: if he somehow clicks it, it still moves
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      moveButton();
+    });
+
+    yesBtn.onclick = () => {
+      confetti({ particleCount: 250, spread: 100, origin: { y: 0.6 } });
+      if (document.getElementById("successSnd"))
+        document.getElementById("successSnd").play();
+      proposeGame.style.display = "none";
+      proposeResult.style.display = "block";
+    };
+  } else if (item.day === 9) { // CHOCOLATE DAY: Comic + Scratch
+        modalBody.innerHTML = `
+            <div id="comicSection">
+                <div class="comic-container">
+                    <div class="comic-frame">
+                        <img src="comic1.png">
+                        <div class="comic-text">That day I was already extremely overwhelmed. Subha se mood bilkul accha nhi tha, the week seemed very hectic for me and upar se I was falling sick</div>
+                    </div>
+                    <div class="comic-frame">
+                        <img src="comic2.png">
+                        <div class="comic-text">Even after I cam eback home, I had to attend another meeting. I was so tired and so stressed and people just kept texting us time pe and I was very overwhelmed. I do not know mere mind mai kya chal rha tha. Phir maine tujhe call kiya.</div>
+                    </div>
+                    <div class="comic-frame">
+                        <img src="comic3.png">
+                        <div class="comic-text">I called with the intention ki I can distract myself from whatever I was feeling. But terese kabhi kuch baat chupa hi nhi sakthi. Teri awaaz sunke mai ro di. This is something I do not do with anyone else. Even when I'm feeling down, I've always handled it on my own. But this time, you made me feel safe and loved.</div>
+                    </div>
+                    <div class="comic-frame">
+                        <img src="comic4.png">
+                        <div class="comic-text">Tu baat sunta hai, mujhe hasata hai, and I felt so so so much better talking to you and that's honestly something that I never thought I would cause I used to just avoid people when I'm feeling down. But i was happy being vulnerable with you. I felt extremely lucky that moment. I wanted to hug you but chalo imagine karte karte so gayi thi. I don't know what you must've felt uss din ki mai aise out of no where ro di but that chocolate was the best gesture.</div>
+                    </div>
+                </div>
+                <button id="startScratchBtn" style="margin-top:15px;">Eat the Chocolate 🍫</button>
+            </div>
+
+            <div id="scratchSection" style="display:none;">
+                <p style="color:var(--hot-pink); font-weight:bold; margin-bottom:10px;">Scratch karo</p>
+                <div class="chocolate-box">
+                    <img src="us-chocolate.jpg" class="hidden-photo">
+                    <canvas id="scratchCanvas" width="280" height="280"></canvas>
+                </div>
+                <div id="chocolateNote" style="display:none; margin-top:15px;">
+                    <div class="envelope" id="openEnv" style="font-size:50px; cursor:pointer;">✉️</div>
+                    <div id="secretNote" style="display:none; padding:15px; border:2px dashed var(--hot-pink); border-radius:10px; background:#fff5f5; width:90%;">
+                        <!-- IMAGE INSIDE ENVELOPE -->
+                        <img src="envelope-small.jpg" class="envelope-photo">
+                        <p>${item.content}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const startScratchBtn = document.getElementById('startScratchBtn');
+        const comicSection = document.getElementById('comicSection');
+        const scratchSection = document.getElementById('scratchSection');
+
+        startScratchBtn.onclick = () => {
+            comicSection.style.display = "none";
+            scratchSection.style.display = "flex"; // Changed to flex for centering
+            initScratch();
         };
     }
 }
@@ -503,45 +570,91 @@ function startRoseShower() {
 }
 
 function initScratch() {
-  const canvas = document.getElementById("scratchCanvas");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
+    const canvas = document.getElementById('scratchCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const note = document.getElementById('chocolateNote');
 
-  // 1. Draw the "Chocolate" cover
-  ctx.fillStyle = "#4b2c20"; // Dark chocolate brown
-  ctx.fillRect(0, 0, 250, 250);
+    // 1. Draw Chocolate Cover
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#4b2c20'; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // 2. Add some "wrapped" texture or text so he knows to scratch
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px Arial";
-  ctx.textAlign = "center";
-  ctx.fillText("SCRATCH ME 🍫", 125, 130);
+    // Add instructions text
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 18px Poppins";
+    ctx.textAlign = "center";
+    ctx.fillText("SCRATCH TO EAT 🍫", 140, 145);
 
-  // 3. Set the "Eraser" mode
-  ctx.globalCompositeOperation = "destination-out";
+    // 2. Prepare the "Eraser"
+    ctx.globalCompositeOperation = 'destination-out';
 
-  const scratch = (e) => {
-    e.preventDefault();
-    const rect = canvas.getBoundingClientRect();
+    const handleScratch = (e) => {
+        // Prevent the page from scrolling
+        if (e.cancelable) e.preventDefault();
 
-    // Get correct coordinates for both Mouse and Touch
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const rect = canvas.getBoundingClientRect();
+        
+        // Handle both Mouse and Touch coordinates
+        let clientX, clientY;
+        if (e.touches && e.touches[0]) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
 
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
-    ctx.beginPath();
-    ctx.arc(x, y, 25, 0, Math.PI * 2); // 25 is the size of the scratch
-    ctx.fill();
-  };
+        ctx.beginPath();
+        ctx.arc(x, y, 30, 0, Math.PI * 2); // 30 is the bite size
+        ctx.fill();
 
-  // Listeners for both PC and Mobile
-  canvas.addEventListener("mousemove", (e) => {
-    if (e.buttons === 1) scratch(e);
-  });
-  canvas.addEventListener("touchstart", scratch);
-  canvas.addEventListener("touchmove", scratch);
+        checkScratched(canvas, note);
+    };
+
+    // MOUSE EVENTS (Desktop)
+    canvas.addEventListener('mousemove', (e) => {
+        if (e.buttons === 1) handleScratch(e);
+    });
+    canvas.addEventListener('mousedown', handleScratch);
+
+    // TOUCH EVENTS (Mobile)
+    canvas.addEventListener('touchstart', handleScratch, { passive: false });
+    canvas.addEventListener('touchmove', handleScratch, { passive: false });
+}
+
+// Function to auto-reveal the note once enough is scratched
+function checkScratched(canvas, note) {
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels = imageData.data;
+    let transparentPixels = 0;
+
+    for (let i = 0; i < pixels.length; i += 4) {
+        if (pixels[i + 3] < 128) transparentPixels++;
+    }
+
+    const percent = (transparentPixels / (canvas.width * canvas.height)) * 100;
+    if (percent > 50) { 
+        canvas.style.transition = "opacity 1s ease";
+        canvas.style.opacity = "0";
+        note.style.display = "flex"; // Show the envelope container
+        setTimeout(() => {
+            canvas.remove();
+            const openEnv = document.getElementById('openEnv');
+            const secretNote = document.getElementById('secretNote');
+            if(openEnv) {
+                openEnv.onclick = () => {
+                    openEnv.innerHTML = '📂';
+                    secretNote.style.display = 'block'; // Reveal note and small photo
+                    confetti();
+                };
+            }
+        }, 1000);
+    }
 }
 
 function initKissZone() {
@@ -559,7 +672,3 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
-
-
-
-
