@@ -98,7 +98,7 @@ const valentineData = [
     title: "Chocolate Day",
     type: "approval", 
     task: "I want a cutie selfie with a chocolate or any snack you wanna have today. (Either you get or I am getting it for you )",
-    content: "Like the song that you recently started listening -<br><br> एक नज़र जो ऐसे मिल रही है, थोड़ी तेज़ सांसें चल रही हैं,सीने में है धड़का, अज़ जोरों से, हम समझते थे के इसमें दिल नहीं है<br><br> Even I thought ki mai kabhi kabhi aise kisiko apna emotional side dikhaungi hi nhi and ki I won't need anyone in my life. Phir tune entry maar li and the days I cried in front of you, the way you confort me and the way you make me smile, I am so emotionally dependent on you and I am loving it! I love you so much Aditya! ❤️",
+    content: "Like the song that you recently started listening (song toh guess kar le) -<br><br> एक नज़र जो ऐसे मिल रही है, थोड़ी तेज़ सांसें चल रही हैं,सीने में है धड़का, अज़ जोरों से, हम समझते थे के इसमें दिल नहीं है<br><br> Even I thought ki mai kabhi kabhi aise kisiko apna emotional side dikhaungi hi nhi, mai hu hi stone hearted and ki I won't need anyone in my life. Phir tune entry maar li and the days I cried in front of you, the way you confort me and the way you make me smile, I am so emotionally dependent on you and I am loving it! I love you so much Aditya! ❤️",
   },
 ];
 
@@ -672,3 +672,4 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
+
