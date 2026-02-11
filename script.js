@@ -105,7 +105,7 @@ const valentineData = [
     day: 11,
     title: "Promise Day and happy 5 months Mitthuuu!!!",
     type: "approval",
-    task: "Recent ka nhi but college ki aisi ham dono ki aisi kuch baate batao jo were good memories for you before we became official...mere side ke tujhe itne pata hai, tumhare aise hai? ",
+    task: "Recent ka nhi but college mai ham dono ki aisi kuch baate batao jo are good memories for you before we became official...mere side ke tujhe itne pata hai, tumhare aise hai? ",
   },
 ];
 
@@ -795,3 +795,4 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
+
