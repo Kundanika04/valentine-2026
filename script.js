@@ -96,9 +96,16 @@ const valentineData = [
   {
     day: 9,
     title: "Chocolate Day",
-    type: "approval", 
+    type: "approval",
     task: "I want a cutie selfie with a chocolate or any snack you wanna have today. (Either you get or I am getting it for you )",
-    content: "Like the song that you recently started listening (song toh guess kar le) -<br><br> एक नज़र जो ऐसे मिल रही है, थोड़ी तेज़ सांसें चल रही हैं,सीने में है धड़का, अज़ जोरों से, हम समझते थे के इसमें दिल नहीं है<br><br> Even I thought ki mai kabhi kabhi aise kisiko apna emotional side dikhaungi hi nhi, mai hu hi stone hearted and ki I won't need anyone in my life. Phir tune entry maar li and the days I cried in front of you, the way you confort me and the way you make me smile, I am so emotionally dependent on you and I am loving it! I love you so much Aditya! ❤️",
+    content:
+      "Like the song that you recently started listening (song toh guess kar le) -<br><br> एक नज़र जो ऐसे मिल रही है, थोड़ी तेज़ सांसें चल रही हैं,सीने में है धड़का, अज़ जोरों से, हम समझते थे के इसमें दिल नहीं है<br><br> Even I thought ki mai kabhi kabhi aise kisiko apna emotional side dikhaungi hi nhi, mai hu hi stone hearted and ki I won't need anyone in my life. Phir tune entry maar li and the days I cried in front of you, the way you confort me and the way you make me smile, I am so emotionally dependent on you and I am loving it! I love you so much Aditya! ❤️",
+  },
+  {
+    day: 11,
+    title: "Promise Day and happy 5 months Mitthuuu!!!",
+    type: "approval",
+    task: "Recent ka nhi but college ki aisi ham dono ki aisi kuch baate batao jo were good memories for you before we became official...mere side ke tujhe itne pata hai, tumhare aise hai? ",
   },
 ];
 
@@ -495,8 +502,9 @@ function loadInteraction(item) {
       proposeGame.style.display = "none";
       proposeResult.style.display = "block";
     };
-  } else if (item.day === 9) { // CHOCOLATE DAY: Comic + Scratch
-        modalBody.innerHTML = `
+  } else if (item.day === 9) {
+    // CHOCOLATE DAY: Comic + Scratch
+    modalBody.innerHTML = `
             <div id="comicSection">
                 <div class="comic-container">
                     <div class="comic-frame">
@@ -536,16 +544,131 @@ function loadInteraction(item) {
             </div>
         `;
 
-        const startScratchBtn = document.getElementById('startScratchBtn');
-        const comicSection = document.getElementById('comicSection');
-        const scratchSection = document.getElementById('scratchSection');
+    const startScratchBtn = document.getElementById("startScratchBtn");
+    const comicSection = document.getElementById("comicSection");
+    const scratchSection = document.getElementById("scratchSection");
 
-        startScratchBtn.onclick = () => {
-            comicSection.style.display = "none";
-            scratchSection.style.display = "flex"; // Changed to flex for centering
-            initScratch();
+    startScratchBtn.onclick = () => {
+      comicSection.style.display = "none";
+      scratchSection.style.display = "flex"; // Changed to flex for centering
+      initScratch();
+    };
+  } else if (item.day === 10) {
+    // TEDDY DAY
+    let hugPower = 0;
+    modalBody.innerHTML = `
+            <div class="teddy-box">
+                <p style="font-weight:bold;">Give the Teddy a big squeeze! 🤗</p>
+                <div id="teddyEmoji">🧸</div>
+                
+                <div class="hug-meter-container">
+                    <div id="hugMeterBar"></div>
+                </div>
+                
+                <p class="hug-instructions" id="hugStatus">Tap the teddy to start hugging...</p>
+                
+                <div id="teddyMessage" style="display:none; margin-top:20px; animation: fadeIn 0.5s;">
+                    <div class="hidden-note" style="display:block; background:#fff5f5; border:2px dashed var(--hot-pink);">
+                        ${item.content}
+                    </div>
+                </div>
+            </div>
+        `;
+
+    const teddy = document.getElementById("teddyEmoji");
+    const bar = document.getElementById("hugMeterBar");
+    const status = document.getElementById("hugStatus");
+    const msg = document.getElementById("teddyMessage");
+
+    const handleSqueeze = (e) => {
+      if (e) e.preventDefault();
+      if (hugPower >= 100) return;
+
+      hugPower += 5; // Each tap adds 5%
+      bar.style.width = hugPower + "%";
+
+      // Visual Squeeze Effect
+      teddy.style.transform = "scale(0.8)";
+      setTimeout(() => {
+        teddy.style.transform = "scale(1.1)";
+      }, 50);
+
+      // Logic for different stages
+      if (hugPower < 50) {
+        status.innerText = "More hugs! ❤️";
+      } else if (hugPower < 90) {
+        status.innerText = "Almost there! So warm! 🔥";
+      } else if (hugPower >= 100) {
+        status.innerText = "HUG COMPLETED! 🧸✨";
+        teddy.style.transform = "scale(1.2)";
+        confetti({ particleCount: 150, spread: 60 });
+
+        // Show the final note
+        msg.style.display = "block";
+        teddy.style.animation = "heartbeat 1.5s infinite";
+      }
+    };
+
+    // Desktop and Mobile listeners
+    teddy.addEventListener("mousedown", handleSqueeze);
+    teddy.addEventListener("touchstart", handleSqueeze, { passive: false });
+  } else if (item.day === 11) {
+    // PROMISE DAY: Infinite Reason Machine
+    const reasons = [
+      "Pata nhi kyu bhejtha tha but I liked it whenever you would send your DAs to me aise for confirming if tune sab sahi kiya ki nhi. Bohot khush ho jaati jab bhi tera aise koi message aata tha. Maybe tu dusro ko bhi bhetha hoga who nhi pata but still I was happy you'd sent me. Itne focus ke saath tere DAs check karti thi my god",
+      "Back when tuje choki choki ka packet bhi kholne nhi aata tha....kya kya sikhana padtha hai tumhe",
+      "Everytime either of us had ice cream, we would always send a picture of it...I'm pretty sure even when I was trying \"not to talk to you\" I would still send you pictures...it was something i'd only do with you aur koi nhi",
+      "Jab hamari baate start hui thi and I would wait everyday for the end of the day to get your text...I would wait cause I didn't want to annoy you by texting but kabhi kabhi mujhse raha nhi jaata and mai hi text kar deti thi and phir bas ek ghanta we would chat...I mean 4th semester ke FATs ke time pe I would enjoy nights with you aaahhhaaa it was fun",
+      "Class mai kabhi aise saath mai nhi baithe and agar baiththe bhi toh baat karte hi nhi the...tab hi thoda lagta tha ki hmmm baat toh nhi hoti hamare beech but phir raat mai text kaafi kaafi kaafi baate hehehe",
+      "Again I know ki sabhi ke liye le aaya tha but jab tu Ooty gaya and you got chocolates waha se oohhooo the best everI savoured those chocolates and I would be so so so so happy every time I ate it",
+      "Whenever you would tell about your city ke kahaniya ya phir apne bachpan ke kisse, mai itne interest se sunti aur itni khush ho jaati...I love it when when you talk mitthu I love listening to you...aise hi kahaniya batate reh na",
+      "October mai, when we went to McD for my treat and you told me ki you wore a shirt because I liked it MMMMMMMMMMMMMMMMM itni hasi mai who message padhke",
+      "The car obsession...I like the fact that I can share my insane obsession about driving with you..bhale hi I haven't driven around as much as you have but still tere saath toh drive pe jaana hai..chalega?",
+      "When you got me the Jhumkas from Gujarat...one of the best things I've ever gotten...I wore them the most...itna pehenthi thi ki roommates gaali dete the ki kuch aur pehen le...I made sure ki for my sankranthi outfit I should only wear yeh...mummy bohot boli ki ek aur set pehen le kyunki earrings se matching necklace nhi thi but still earrings it is I love them",
+      "The amount of happiness I would get whenever I got you a kinderjoy...you would get so happy with kinderjoy mera mann bhar jaata tha seeing you smile like that",
+      "The day I found ki aise your sister has a flat in the same apartment as mine...oohhhooo...for no frickin reason I was so happy",
+      "You know when I felt like I won....I remember when I asked you Pehle about your ghar ka naam, you said ki no one in the college knows but then later (a year ago) you told me about Ishu and best part...I found out about Munna...I love my Munna",
+      "The day you wore my bracelet in the class for the first time and I wore your watch...that day made me feel so mmmmmm I don't know how to describe the feeling but it was just one of the best feelings",
+      "Internship ke time pe, on my birthday...I was pretty sure I wouldn't get your message considering how I don't text so often but nhi jab mai subha uthi ad you wished and teddy wished, it made my day Mitthu..i know you're not the kind of person to stay up early and wish kisi ko bhi, so that meant a lot and I was so happy that day...and that day, I was literally only talking to you",
+      "You know when I felt the happy during the placements time...you called me even before the day of your interview...you could've done anything, you could've rested, you could've slept, reels chala leta but nhi, you called me you talked to me and that meant a lot a lot a lot pata hai",
+      "Whenever you talk about my bag, the way you tell me ki it's yours and no one can have it...tujhe pata nhi how much I blush, I love it so so so much when you get possessive",
+      "Best day ever in October...when you sent the message...I did catch it but I still wasn't sure but when you told me pakka pakka OH MY GODDDDDD that day I was high",
+      "Our first kiss...mmmmmmm tujhe toh pata hi hai how I felt...aise mujhe chup karana is hard but tumne kara diya..I love you so much mitthu",
+      "Whenever I overthink, you always have the perfect words to calm me down...I don't know how you do it but you just do...mai faltu ka overthink karti hu and within minutes of talking with you, you make me laugh",
+      "When I was insecure about the way I look and you told me that I look beautiful and that you love my smile...I don't know how to explain the feeling but it just made me feel the most loved...that night even when after I cried, your words made me feel so so so much better and I slept so happy that night",
+    ];
+
+    modalBody.innerHTML = `
+            <p style="font-weight:bold; color:var(--hot-pink);">"All the moments I fell you for you over and over again<br>My promise to always love you and make sure you are the happiest cause you truly truly deserve the best, mitthu<br>For every time you think why I love you just remember that I have all of these moments with me which made me fall in love with you"</p>
+            <div id="reasonContainer" style="background: var(--bg); border: 2px dashed var(--soft-pink); padding: 20px; border-radius: 15px; margin: 20px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; font-style: italic; color: var(--hot-pink);">
+                <p id="reasonText" style="transition: opacity 0.2s ease-in-out; margin:0;">Click the button to see a reason! 👇</p>
+            </div>
+            <button id="reasonBtn">A moment</button>
+            <p style="font-size: 0.8rem; margin-top:10px; opacity:0.7; color:var(--hot-pink);">(Keep clicking... there's no end!)</p>
+        `;
+
+    setTimeout(() => {
+      const btn = document.getElementById("reasonBtn");
+      const text = document.getElementById("reasonText");
+      if (btn && text) {
+        btn.onclick = () => {
+          const randomReason =
+            reasons[Math.floor(Math.random() * reasons.length)];
+          text.style.opacity = 0;
+          setTimeout(() => {
+            text.innerText = randomReason;
+            text.style.opacity = 1;
+            confetti({
+              particleCount: 40,
+              spread: 50,
+              origin: { y: 0.8 },
+              colors: ["#ff0054", "#fb6f92"],
+            });
+          }, 200);
         };
-    }
+      }
+    }, 100);
+  }
 }
 
 // Keep your startRoseShower, initScratch, initKissZone exactly as they were!
@@ -570,91 +693,91 @@ function startRoseShower() {
 }
 
 function initScratch() {
-    const canvas = document.getElementById('scratchCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const note = document.getElementById('chocolateNote');
+  const canvas = document.getElementById("scratchCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const note = document.getElementById("chocolateNote");
 
-    // 1. Draw Chocolate Cover
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = '#4b2c20'; 
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // 1. Draw Chocolate Cover
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "#4b2c20";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Add instructions text
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 18px Poppins";
-    ctx.textAlign = "center";
-    ctx.fillText("SCRATCH TO EAT 🍫", 140, 145);
+  // Add instructions text
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 18px Poppins";
+  ctx.textAlign = "center";
+  ctx.fillText("SCRATCH TO EAT 🍫", 140, 145);
 
-    // 2. Prepare the "Eraser"
-    ctx.globalCompositeOperation = 'destination-out';
+  // 2. Prepare the "Eraser"
+  ctx.globalCompositeOperation = "destination-out";
 
-    const handleScratch = (e) => {
-        // Prevent the page from scrolling
-        if (e.cancelable) e.preventDefault();
+  const handleScratch = (e) => {
+    // Prevent the page from scrolling
+    if (e.cancelable) e.preventDefault();
 
-        const rect = canvas.getBoundingClientRect();
-        
-        // Handle both Mouse and Touch coordinates
-        let clientX, clientY;
-        if (e.touches && e.touches[0]) {
-            clientX = e.touches[0].clientX;
-            clientY = e.touches[0].clientY;
-        } else {
-            clientX = e.clientX;
-            clientY = e.clientY;
-        }
+    const rect = canvas.getBoundingClientRect();
 
-        const x = clientX - rect.left;
-        const y = clientY - rect.top;
+    // Handle both Mouse and Touch coordinates
+    let clientX, clientY;
+    if (e.touches && e.touches[0]) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
 
-        ctx.beginPath();
-        ctx.arc(x, y, 30, 0, Math.PI * 2); // 30 is the bite size
-        ctx.fill();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
-        checkScratched(canvas, note);
-    };
+    ctx.beginPath();
+    ctx.arc(x, y, 30, 0, Math.PI * 2); // 30 is the bite size
+    ctx.fill();
 
-    // MOUSE EVENTS (Desktop)
-    canvas.addEventListener('mousemove', (e) => {
-        if (e.buttons === 1) handleScratch(e);
-    });
-    canvas.addEventListener('mousedown', handleScratch);
+    checkScratched(canvas, note);
+  };
 
-    // TOUCH EVENTS (Mobile)
-    canvas.addEventListener('touchstart', handleScratch, { passive: false });
-    canvas.addEventListener('touchmove', handleScratch, { passive: false });
+  // MOUSE EVENTS (Desktop)
+  canvas.addEventListener("mousemove", (e) => {
+    if (e.buttons === 1) handleScratch(e);
+  });
+  canvas.addEventListener("mousedown", handleScratch);
+
+  // TOUCH EVENTS (Mobile)
+  canvas.addEventListener("touchstart", handleScratch, { passive: false });
+  canvas.addEventListener("touchmove", handleScratch, { passive: false });
 }
 
 // Function to auto-reveal the note once enough is scratched
 function checkScratched(canvas, note) {
-    const ctx = canvas.getContext('2d');
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const pixels = imageData.data;
-    let transparentPixels = 0;
+  const ctx = canvas.getContext("2d");
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const pixels = imageData.data;
+  let transparentPixels = 0;
 
-    for (let i = 0; i < pixels.length; i += 4) {
-        if (pixels[i + 3] < 128) transparentPixels++;
-    }
+  for (let i = 0; i < pixels.length; i += 4) {
+    if (pixels[i + 3] < 128) transparentPixels++;
+  }
 
-    const percent = (transparentPixels / (canvas.width * canvas.height)) * 100;
-    if (percent > 50) { 
-        canvas.style.transition = "opacity 1s ease";
-        canvas.style.opacity = "0";
-        note.style.display = "flex"; // Show the envelope container
-        setTimeout(() => {
-            canvas.remove();
-            const openEnv = document.getElementById('openEnv');
-            const secretNote = document.getElementById('secretNote');
-            if(openEnv) {
-                openEnv.onclick = () => {
-                    openEnv.innerHTML = '📂';
-                    secretNote.style.display = 'block'; // Reveal note and small photo
-                    confetti();
-                };
-            }
-        }, 1000);
-    }
+  const percent = (transparentPixels / (canvas.width * canvas.height)) * 100;
+  if (percent > 50) {
+    canvas.style.transition = "opacity 1s ease";
+    canvas.style.opacity = "0";
+    note.style.display = "flex"; // Show the envelope container
+    setTimeout(() => {
+      canvas.remove();
+      const openEnv = document.getElementById("openEnv");
+      const secretNote = document.getElementById("secretNote");
+      if (openEnv) {
+        openEnv.onclick = () => {
+          openEnv.innerHTML = "📂";
+          secretNote.style.display = "block"; // Reveal note and small photo
+          confetti();
+        };
+      }
+    }, 1000);
+  }
 }
 
 function initKissZone() {
@@ -672,4 +795,3 @@ function initKissZone() {
 
 init();
 setInterval(init, 60000);
-
